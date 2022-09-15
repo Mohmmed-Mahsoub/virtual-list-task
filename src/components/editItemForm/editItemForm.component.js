@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 
-const AddItemForm = ({
-  numItems,
-  itemHeight,
+const EditItemForm = ({
+  subject,
+  id,
+  priority,
+  status,
+  description,
+  setEditItem,
+  style,
   handleClose,
-  setCount,
-  setNewItem,
 }) => {
   const {
     register,
@@ -15,34 +19,30 @@ const AddItemForm = ({
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    setNewItem({
-      ...data,
-      id: numItems + 1,
-      style: {
-        //this the special style to show the item in the right position
-        position: "absolute",
-        /* top: `${numItems * itemHeight}px`, */ //add to end
-        top: `0px`, //add to start
-        width: "100%",
-        height: `${itemHeight}px`,
-      },
-    });
-    //to make react know a new item added
-    setCount((prevState) => prevState + 1);
+  useEffect(() => {
+    //set the form inputs with the data of the item need to edit
+    setValue("subject", subject);
+    setValue("description", description);
+    setValue("status", status);
+    setValue("priority", priority);
+  }, []);
 
-    //reset form inputs
-    setValue("subject", "");
-    setValue("description", "");
-    //close moda;
+  const onSubmit = async (data) => {
+    //send the new data for item after edit it
+    setEditItem({
+      ...data,
+      id: id,
+      style,
+    });
+    //close the modal
     handleClose();
   };
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group className="mb-3" controlId="formBasicSubject">
         <Form.Control
-          placeholder="subject"
           type="text"
+          placeholder="subject"
           {...register("subject", {
             required: true,
           })}
@@ -85,4 +85,4 @@ const AddItemForm = ({
   );
 };
 
-export default AddItemForm;
+export default EditItemForm;
