@@ -39,7 +39,7 @@ function App() {
         style: {
           //this the special style to show the item in the right position
           position: "absolute",
-          top: `${i * itemHeight + 40}px`, //add 40px to make items begin after the table heading
+          top: `${i * itemHeight}px`,
           width: "100%",
           height: `${itemHeight}px`,
         },
@@ -49,18 +49,9 @@ function App() {
 
   return (
     <div className="page">
-      <div
-        className="scroll"
-        style={{ overflowY: "scroll", height: `${windowHeight}px` }}
-        onScroll={onScroll}
-      >
-        <div
-          className="inner"
-          style={{ position: "relative", height: `${innerHeight}px` }}
-        >
-          <TableListItems renderItems={renderItems} />
-        </div>
-      </div>
+      <TableListItems
+        {...{ renderItems, windowHeight, onScroll, innerHeight }}
+      />
     </div>
   );
 }
