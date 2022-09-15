@@ -20,7 +20,7 @@ const TableListItems = ({
       <div className="tableBody">
         <div
           className="scroll"
-          style={{ overflowY: "scroll", height: `${windowHeight - 40}px` }} //40px for the heading
+          style={{ overflowY: "scroll", height: `${windowHeight - 100}px` }} //40px for the heading and 60px for nav
           onScroll={onScroll}
         >
           <div
