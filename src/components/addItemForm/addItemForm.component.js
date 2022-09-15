@@ -41,6 +41,7 @@ const AddItemForm = ({
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Group className="mb-3" controlId="formBasicSubject">
         <Form.Control
+          placeholder="subject"
           type="text"
           {...register("subject", {
             required: true,
@@ -66,6 +67,7 @@ const AddItemForm = ({
 
       <Form.Group className="mb-3" controlId="formBasicDescription">
         <Form.Control
+          placeholder="description"
           type="text"
           {...register("description", {
             required: true,
