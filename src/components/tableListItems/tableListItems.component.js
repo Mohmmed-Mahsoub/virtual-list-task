@@ -5,6 +5,8 @@ const TableListItems = ({
   windowHeight,
   onScroll,
   innerHeight,
+  handleShow,
+  setModal,
 }) => {
   return (
     <div className="tableContainer">
@@ -15,6 +17,7 @@ const TableListItems = ({
           <div className="cell">priority</div>
           <div className="cell">status</div>
           <div className="cell">description</div>
+          <div className="cell">edit</div>
         </div>
       </div>
       <div className="tableBody">
@@ -38,6 +41,8 @@ const TableListItems = ({
                     status,
                     description,
                     style,
+                    handleShow,
+                    setModal,
                   }}
                 />
               )
