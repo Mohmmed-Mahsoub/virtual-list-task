@@ -1,6 +1,11 @@
 import TableRowItem from "../tableRowItem/tableRowItem.component";
 
-const TableListItems = ({ renderItems }) => {
+const TableListItems = ({
+  renderItems,
+  windowHeight,
+  onScroll,
+  innerHeight,
+}) => {
   return (
     <div className="tableContainer">
       <div className="tableHeding">
@@ -13,21 +18,32 @@ const TableListItems = ({ renderItems }) => {
         </div>
       </div>
       <div className="tableBody">
-        {renderItems.map(
-          ({ id, subject, priority, status, description, style }) => (
-            <TableRowItem
-              key={subject}
-              {...{
-                id,
-                subject,
-                priority,
-                status,
-                description,
-                style,
-              }}
-            />
-          )
-        )}
+        <div
+          className="scroll"
+          style={{ overflowY: "scroll", height: `${windowHeight - 40}px` }} //40px for the heading
+          onScroll={onScroll}
+        >
+          <div
+            className="inner"
+            style={{ position: "relative", height: `${innerHeight}px` }}
+          >
+            {renderItems.map(
+              ({ id, subject, priority, status, description, style }) => (
+                <TableRowItem
+                  key={subject}
+                  {...{
+                    id,
+                    subject,
+                    priority,
+                    status,
+                    description,
+                    style,
+                  }}
+                />
+              )
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
