@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "./App.css";
-import AddItemForm from "./components/addItemForm/addItemForm.component";
+import ModalComp from "./components/modalComp/modalComp.component";
 import TableListItems from "./components/tableListItems/tableListItems.component";
 import { usePrevious } from "./customHooks/usePrev";
 import useWindowDimensions from "./customHooks/useWindowDimensions";
+import { objIsNotEmpty } from "./utilities/objIsNotEmpty ";
 
 function App() {
   //for handle modal
@@ -17,7 +18,14 @@ function App() {
   const [renderItems, setRenderItems] = useState([]);
   const [scrollTop, setScrollTop] = useState(0);
   const [newItem, setNewItem] = useState({});
+
+  const [editItem, setEditItem] = useState({});
+  //use this to force change the renderItems
+  const [editState, setEditState] = useState(false);
+
   const { windowHeight } = useWindowDimensions();
+  //use this to store the modal diffrent data to send it from the btn to the modal component
+  const [modal, setModal] = useState({});
 
   const numItems = items.length;
   const itemHeight = 40;
@@ -45,7 +53,7 @@ function App() {
       newRrenderItems.push(items[i]);
     }
     setRenderItems(newRrenderItems);
-  }, [items, scrollTop]);
+  }, [items, scrollTop, editState]);
 
   //1- in initial render create mock data for items and set the state with it
   useEffect(() => {
@@ -97,35 +105,59 @@ function App() {
     }
   }, [count]);
 
+  useEffect(() => {
+    //run this ONLY when edit Item and avoid first render
+    if (objIsNotEmpty(editItem)) {
+      //select the editItem index
+      const editItemIndex = items.findIndex((obj) => obj.id == editItem.id);
+      //Update the targeted item object in items with the editItem object data
+      items[editItemIndex] = editItem;
+      //set the items state with the readyNewArr and that will change the renderItems state
+      setItems(items);
+      //use this to force change the renderItems
+      setEditState(!editState);
+    }
+  }, [editItem]);
+
   return (
     <div className="page">
       <nav className="nav">
         <div className="nav-cont">
-          <Button variant="primary" onClick={handleShow}>
+          <Button
+            className="creat-item_btn"
+            variant="primary"
+            onClick={() => {
+              handleShow();
+              //set the modal state to let modal component know witch modalType, modalTitle and modalData it will show
+              setModal({
+                modalType: "creat",
+                modalTitle: "create item",
+                modalData: {
+                  numItems,
+                  itemHeight,
+                  handleClose,
+                  setCount,
+                  setNewItem,
+                },
+              });
+            }}
+          >
             create item{" "}
           </Button>
         </div>
       </nav>
       <TableListItems
-        {...{ renderItems, windowHeight, onScroll, innerHeight }}
+        {...{
+          renderItems,
+          windowHeight,
+          onScroll,
+          innerHeight,
+          handleShow,
+          setModal,
+        }}
       />
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>create item</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <AddItemForm
-            {...{
-              numItems,
-              itemHeight,
-              handleClose,
-              setCount,
-              setNewItem,
-            }}
-          />
-        </Modal.Body>
-      </Modal>
+      {/* general modal component */}
+      <ModalComp {...{ show, handleClose, modal, setEditItem }} />
     </div>
   );
 }
