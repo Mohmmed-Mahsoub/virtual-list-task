@@ -16,6 +16,9 @@ The source code for the virtual-list-task [view demo](https://virtual-list-task.
 
 - show a table to list items
 - handle a large amount of data +10,000, without using any dependencies using by using a virtual list strategy for rendering
+- show data by desending order
+- create new item and show it in the top
+- edit any item and show it with new data and in it's position
 
 ## Dependencies
 
@@ -59,18 +62,25 @@ The main folder structure of the code is structured like the following:
 │   └── manifest.json
 ├── src
 │   ├── components
+│   │   ├── addItemForm
+│   │   │   └── addItemForm.component.js
+│   │   ├── editItemForm
+│   │   │   └── editItemForm.component.js
+│   │   ├── modalComp
+│   │   │   └── modalComp.component.js
 │   │   ├── tableListItems
 │   │   │   └── uleListItems.component.js
 │   │   ├── tableRowItem
 │   │   │   └── uableRowItem.component.js
 │   ├── customHooks
+│   │   ├── usePrev.js
 │   │   └── useWindowDimensions.js
+│   ├── utilities
+│   │   └── objIsNotEmpty.js
 │   ├── App.css
 │   ├── App.js
 │   ├── index.css
 │   ├── index.js
-│   ├── serviceWorker.js
-│   └── setupTests.js
 ├── .gitignore
 ├── package-lock.json
 ├── package.json
