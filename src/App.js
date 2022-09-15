@@ -29,9 +29,16 @@ function App() {
 
   useEffect(() => {
     setItems(
-      new Array(count)
-        .fill(null)
-        .map((_, i) => ({ index: i, name: `Item ${i}` }))
+      new Array(count).fill(null).map((_, i) => ({
+        index: i,
+        name: `Item ${i}`,
+        style: {
+          position: "absolute",
+          top: `${i * itemHeight}px`,
+          width: "100%",
+          height: `${itemHeight}px`,
+        },
+      }))
     );
   }, []);
 
@@ -46,13 +53,9 @@ function App() {
           className="inner"
           style={{ position: "relative", height: `${innerHeight}px` }}
         >
-          {items.map((i) => (
-            <div
-              key={i.name}
-              className="item"
-              style={{ height: `${itemHeight}px` }}
-            >
-              <label>{i.name}</label>
+          {renderItems.map(({ name, style }) => (
+            <div key={name} className="item" style={style}>
+              <label>{name}</label>
             </div>
           ))}
         </div>
