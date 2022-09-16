@@ -122,7 +122,8 @@ function App() {
   return (
     <div className="page">
       <nav className="nav">
-        <div className="nav-cont">
+        <div className="nav-cont justify-content-between">
+          <h1 className="fs-3">PlanRadar Dash</h1>
           <Button
             className="creat-item_btn"
             variant="primary"
