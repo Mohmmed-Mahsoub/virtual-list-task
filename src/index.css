@@ -34,9 +34,7 @@ body {
   min-width: -moz-fit-content;
   min-width: fit-content;
 }
-.page {
-  overflow-x: overlay;
-}
+
 button,
 button:hover,
 button:focus,
@@ -67,6 +65,9 @@ button {
 
 /* table style*/
 .tableContainer {
+  overflow-x: scroll;
+}
+.tableCont {
   min-width: 500px;
 }
 .tableRowHeding,
